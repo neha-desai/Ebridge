@@ -1,0 +1,91 @@
+html {
+  height: 100%;
+}
+body {
+  /*background-color: #ebeeef;*/
+  background-image: url("Images/Untitled\ design\ \(2\).png");
+}
+
+.loginMainDiv {
+  width: 100%;
+  height: 100%;
+}
+
+.centerMainDiv {
+  display: inline-block;
+  background-color: white;
+  width: 45%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 500px;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.loginTitle {
+  background-image: url("/Teacher/Images/bg-01.jpg");
+  text-align: center;
+  font-size: 30px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  color: white;
+  align-items: center;
+  padding: 70px 15px 74px 15px;
+}
+
+.loginTitle::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(54, 84, 99, 0.7);
+}
+
+#formMain {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  width: 100%;
+}
+
+input[type="text"],
+input[type="password"] {
+  margin-top: 20px;
+  width: 60%;
+  border: none;
+  border-bottom: 0.5px solid grey;
+  padding: 10px 10px 10px 10px;
+  outline: none;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border: none;
+  border-bottom: 1px solid rgb(55, 109, 211);
+}
+
+.btn {
+  background-color: rgb(55, 109, 211);
+}
+
+@media screen and (max-width: 992px) {
+  .centerMainDiv {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .centerMainDiv {
+    width: 90%;
+  }
+}

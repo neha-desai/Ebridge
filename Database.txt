@@ -1,0 +1,72 @@
+
+****************************************** TEACHER TABLE DETAILS ******************************************************
+
+Normal teacher - Level 0
+HOD - Level 1
+Admin - Level 2
+
+//ADD FOREGIN KEY TO TEACHERID TO DEPTID
+ALTER TABLE `teacher` ADD CONSTRAINT `DepartnameName` FOREIGN KEY (`Dept_ID`) REFERENCES `department`(`Department_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+
+
+***************************************************** Leave details Table ***********************************************
+
+Pending --> Status 0
+Approve --> Status 1
+Rejected --> Status 2
+
+0 - Sick
+1 - maternity 
+2- paternity
+3- other
+*****************************************************ADMIN TABLE*****************************************************
+CREATE TABLE `ebdrige`.`admintable` ( `Admin_ID` INT NOT NULL AUTO_INCREMENT , `Admin_Username` VARCHAR(256) NOT NULL , `Admin_Name` VARCHAR(256) NOT NULL , `Admin_Password` VARCHAR(256) NOT NULL , PRIMARY KEY (`Admin_ID`)) ENGINE = InnoDB;
+
+
+INSERT INTO `admintable` (`Admin_ID`, `Admin_Username`, `Admin_Name`, `Admin_Password`) VALUES (NULL, 'Jeet', 'Jeet Doshi', 'Jeet@Doshi')
+
+
+************************************************NOTICE TABLE************************************************************
+CREATE TABLE `ebdrige`.`notice` ( `Notice_ID` INT NOT NULL AUTO_INCREMENT , `NoticeTitle` VARCHAR(256) NOT NULL , `NoticeDescription` VARCHAR(2000) NOT NULL , `Teacher_ID` INT NOT NULL , `Dept_ID` INT NOT NULL , `Date_Uploaded` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP , `Time_Uploaded` TIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`Notice_ID`)) ENGINE = InnoDB;
+ALTER TABLE `notice` DROP FOREIGN KEY `TeacherNotice`; ALTER TABLE `notice` ADD CONSTRAINT `TeacherNotice` FOREIGN KEY (`Teacher_ID`) REFERENCES `teacher`(`Teacher_ID`) ON DELETE CASCADE ON UPDATE CASCADE; ALTER TABLE `notice` ADD CONSTRAINT `DepartmentNotice` FOREIGN KEY (`Dept_ID`) REFERENCES `department`(`Department_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `notice` ADD `NoticeImage` VARCHAR(256) NOT NULL AFTER `Time_Uploaded`;
+ALTER TABLE `notice` CHANGE `Time_Uploaded` `Time_Uploaded` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+
+************************************************SUBJECT TABLE************************************************************
+CREATE TABLE `ebdrige`.`subject_table` ( `Subject_ID` INT NOT NULL AUTO_INCREMENT , `Subject_Name` VARCHAR(256) NOT NULL , `Semester` INT NOT NULL , `Teacher_ID` INT NOT NULL , `Dept_ID` INT NOT NULL , `Subject_Type` INT NOT NULL , PRIMARY KEY (`Subject_ID`)) ENGINE = InnoDB;
+Subject type: 
+1 -> Theory
+2 -> Practical
+
+ALTER TABLE `subject_table` ADD CONSTRAINT `Teacher` FOREIGN KEY (`Teacher_ID`) REFERENCES `teacher`(`Teacher_ID`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `subject_table` CHANGE `Teacher_ID` `Teacher_ID` INT(11) NULL;
+
+************************************************STUDENT TABLE************************************************************
+CREATE TABLE `ebdrige`.`student` ( `Student_ID` INT NOT NULL AUTO_INCREMENT , `Student_Name` VARCHAR(256) NOT NULL , `Department` INT NOT NULL , `Semester` INT NOT NULL , `SeatNo` INT NOT NULL , PRIMARY KEY (`Student_ID`)) ENGINE = InnoDB;
+ALTER TABLE `student` ADD CONSTRAINT `StudentDepartment` FOREIGN KEY (`Department`) REFERENCES `department`(`Department_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `student` ADD `RollNo` INT NOT NULL AFTER `SeatNo`;
+ALTER TABLE `student` ADD `EmailID` VARCHAR(256) NOT NULL AFTER `RollNo`, ADD `Password` VARCHAR(256) NOT NULL AFTER `EmailID`;
+ALTER TABLE `student` CHANGE `Password` `SPassword` VARCHAR(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+
+
+CREATE TABLE `ebdrige`.`exam` ( `Exam_ID` INT NOT NULL AUTO_INCREMENT , `Exam_Name` VARCHAR(256) NOT NULL , `Date` DATE NOT NULL , `Start_Time` TIME NOT NULL , `End_Time` TIME NOT NULL , `Subject` VARCHAR(256) NOT NULL , PRIMARY KEY (`Exam_ID`)) ENGINE = InnoDB;
+ALTER TABLE `exam` CHANGE `Date` `Exam_Date` DATE NOT NULL;
+ALTER TABLE `exam` CHANGE `Subject` `Subject_ID` INT NOT NULL;
+ALTER TABLE `exam` ADD UNIQUE(`Subject_ID`);
+
+CREATE TABLE `ebdrige`.`seatno` ( `ID` INT NOT NULL AUTO_INCREMENT , `Student_ID` INT NOT NULL , `Seat_No` VARCHAR(100) NOT NULL , PRIMARY KEY (`ID`)) ENGINE = InnoDB;
+
+CREATE TABLE `ebdrige`.`room` ( `Room_ID` INT NOT NULL AUTO_INCREMENT , `Room_Number` INT NOT NULL , `Strength` INT NOT NULL , `Floor` INT NOT NULL , PRIMARY KEY (`Room_ID`)) ENGINE = InnoDB;
+ALTER TABLE `room` CHANGE `Floor` `Floor_No` INT(11) NOT NULL;
+
+
+CREATE TABLE `ebdrige`.`allotment` ( `Student_ID` INT NOT NULL , `Exam_ID` INT NOT NULL , `Room_ID` INT NOT NULL ) ENGINE = InnoDB;
+ALTER TABLE `allotment` ADD CONSTRAINT `StudentAllot` FOREIGN KEY (`Student_ID`) REFERENCES `student`(`Student_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `allotment` ADD CONSTRAINT `ExamAllot` FOREIGN KEY (`Exam_ID`) REFERENCES `exam`(`Exam_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `allotment` CHANGE `Room_ID` `Room_ID` INT(11) NULL;
+ALTER TABLE `allotment` ADD CONSTRAINT `roomAllot` FOREIGN KEY (`Room_ID`) REFERENCES `room`(`Room_ID`) ON DELETE SET NULL ON UPDATE CASCADE;
+****IMP URLS*****
+http://localhost/ebridge/Admin/AdminLogin.php
+http://localhost/ebridge/Teacher/TeacherLogin.php
