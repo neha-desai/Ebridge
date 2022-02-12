@@ -10,5 +10,5 @@
     />
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="../css/bootstrap.min.css"></script>
-
+<script src="../JS/jquery.main.js"></script>
     <title>Admin Dashboard</title>

@@ -11,7 +11,7 @@
           $resultArray = $result->fetch_assoc();
           if($resultArray)
           {
-           $Sname = $resultArray['Student_Name'];            
+           $GLOBALS['Sname'] = $resultArray['Student_Name'];            
           }
           else
           {

@@ -56,7 +56,7 @@
           <div class="maindivs">
                 <h5>Your seat no.:</h5>
                 <?php
-                    echo '<h4>'.$resultArray['SeatNo'].'</h4>';
+                    echo '<h4 class="text-info">'.$resultArray['SeatNo'].'</h4>';
           
                 ?>
           </div>
@@ -68,7 +68,7 @@
       <div class="row">
       <div class="col-md-4">
       <div class="maindivs">
-      <p style="color: black;">Subjects you will study this semester:</p>
+      <p style="color: black;"><b>Subjects you will study this semester:</b></p>
                 <?php
                 $sem = $resultArray['Semester'];
                 $subjsql = "SELECT * FROM subject_table WHERE Dept_ID = $deptID AND Semester = $sem";

@@ -67,6 +67,15 @@ ALTER TABLE `allotment` ADD CONSTRAINT `StudentAllot` FOREIGN KEY (`Student_ID`)
 ALTER TABLE `allotment` ADD CONSTRAINT `ExamAllot` FOREIGN KEY (`Exam_ID`) REFERENCES `exam`(`Exam_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `allotment` CHANGE `Room_ID` `Room_ID` INT(11) NULL;
 ALTER TABLE `allotment` ADD CONSTRAINT `roomAllot` FOREIGN KEY (`Room_ID`) REFERENCES `room`(`Room_ID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+
+CREATE TABLE `ebdrige`.`roomstatus` ( `Room_ID` INT NOT NULL , `EDate` DATE NOT NULL , `Start_Time` TIME NOT NULL , `End_Time` TIME NOT NULL ) ENGINE = InnoDB;
+
+
+//AATTENDANCE
+CREATE TABLE `ebdrige`.`lectures` ( `Lec_ID` INT NOT NULL AUTO_INCREMENT , `Date` DATE NOT NULL , `Start_Time` TIME NOT NULL , `End_Time` TIME NOT NULL , `Subject_ID` INT NOT NULL , `Teacher_ID` INT NOT NULL , `attendance` JSON NOT NULL , PRIMARY KEY (`Lec_ID`)) ENGINE = InnoDB;
+ALTER TABLE `lectures` CHANGE `Date` `Lec_Date` DATE NOT NULL;
+
 ****IMP URLS*****
 http://localhost/ebridge/Admin/AdminLogin.php
 http://localhost/ebridge/Teacher/TeacherLogin.php

@@ -3,9 +3,9 @@
 <div class="maindivs"> <!--THREE TABS TO APPROVE START HERE -->
    
    <div class="tab">
- <button class="tablinks" onclick="openCity(event, 'London')">Pending</button>
- <button class="tablinks" onclick="openCity(event, 'Paris')">Rejected</button>
- <button class="tablinks" onclick="openCity(event, 'Tokyo')">Approved</button>
+   <button class="tablinks" onclick="openCity(event, 'London')">Pending</button>
+<button class="tablinks" style="background-color: #F76463;"onclick="openCity(event, 'Paris')">Rejected</button>
+<button class="tablinks" style="background-color: #8BE78B;" onclick="openCity(event, 'Tokyo')">Approved</button>
 </div>
 
 <div id="London" class="tabcontent">
@@ -16,8 +16,7 @@
          <thead>
            <tr>
              <th>Teacher Name</th>
-             <th>Date for leave</th>
-             <th>Description</th>
+             <th>Date for leave</th>            
              <th></th>
            </tr>
          </thead>
@@ -35,9 +34,9 @@ if(!$conn){
    die("connection failed:" . mysqli_connect_error());
 }
 $red = $_SESSION['studentID'];
+$dept = $_SESSION['deptID'];
 
-
-$sqls = "SELECT t.*, l.* FROM teacher t, leavedetails l WHERE t.Teacher_ID = l.Teacher_ID AND l.SStatus='0' ";
+$sqls = "SELECT t.*, l.* FROM teacher t, leavedetails l WHERE t.Teacher_ID = l.Teacher_ID AND l.SStatus='0' AND t.Dept_ID='$dept' AND l.Teacher_ID <> $red";
 
 $result = mysqli_query($conn,$sqls);
 
@@ -48,9 +47,7 @@ while($resultArray = mysqli_fetch_array($result))
  echo '<tr>';
  echo '<td>'.$resultArray['TeacherName'].'</td>';
  echo '<td>'.$resultArray['StartDate'].'</td>';
- echo '<td>'.$resultArray['SDescription'].'</td>';
- echo '<td><a class="approvebtns" id="approve" href="Approve.php?id='.$resultArray['Leave_ID'].'"> Approve </a>
- <a class="approvebtns" id="reject" href="Reject.php?id='.$resultArray['Leave_ID'].'"> Reject </a></td>';
+ echo '<td><button class="btn btn-primary"><a style="text-decoration: none;color: white;" href="viewLeave.php?id='.$resultArray['Leave_ID'].'">View</a></button></td>';
  echo '</tr>';
  
 }
@@ -72,7 +69,6 @@ while($resultArray = mysqli_fetch_array($result))
            <tr>
              <th>Teacher Name</th>
              <th>Date for leave</th>           
-             <th>Description</th>
              <th></th>
            </tr>
          </thead>
@@ -80,7 +76,7 @@ while($resultArray = mysqli_fetch_array($result))
  
  <?php 
  
- $sqlr = "SELECT t.*, l.* FROM teacher t, leavedetails l WHERE t.Teacher_ID = l.Teacher_ID AND l.SStatus='2'";
+ $sqlr = "SELECT t.*, l.* FROM teacher t, leavedetails l WHERE t.Teacher_ID = l.Teacher_ID AND l.SStatus='2' AND t.Dept_ID='$dept' AND l.Teacher_ID <> $red";
  $result = mysqli_query($conn,$sqlr);
 
  while($resultArray = mysqli_fetch_array($result))
@@ -89,9 +85,7 @@ while($resultArray = mysqli_fetch_array($result))
    echo '<tr>';
    echo '<td>'.$resultArray['TeacherName'].'</td>';
    echo '<td>'.$resultArray['StartDate'].'</td>';
-   echo '<td>'.$resultArray['SDescription'].'</td>';
-   echo '<td><a class="approvebtns" id="approve" href="Approve.php?id='.$resultArray['Leave_ID'].'"> Approve </a>
-   <a class="approvebtns" id="MoveToPending" href="MoveToPending.php?id='.$resultArray['Leave_ID'].'"> Move to Pending </a></td>';
+   echo '<td><button class="btn btn-primary"><a style="text-decoration: none;color: white;" href="viewLeave.php?id='.$resultArray['Leave_ID'].'">View</a></button></td>';
    echo '</tr>';
    
  }
@@ -112,7 +106,6 @@ while($resultArray = mysqli_fetch_array($result))
            <tr>
              <th>Teacher Name</th>
              <th>Date for leave</th>           
-             <th>Description</th>
              <th></th>
            </tr>
          </thead>
@@ -120,7 +113,7 @@ while($resultArray = mysqli_fetch_array($result))
 
  <?php 
  
- $sqlr = "SELECT t.*, l.* FROM teacher t, leavedetails l WHERE t.Teacher_ID = l.Teacher_ID AND l.SStatus='1'";
+ $sqlr = "SELECT t.*, l.* FROM teacher t, leavedetails l WHERE t.Teacher_ID = l.Teacher_ID AND l.SStatus='1'AND t.Dept_ID='$dept' AND l.Teacher_ID <> $red";
  $result = mysqli_query($conn,$sqlr);
 
  while($resultArray = mysqli_fetch_array($result))
@@ -129,9 +122,7 @@ while($resultArray = mysqli_fetch_array($result))
    echo '<tr>';
    echo '<td>'.$resultArray['TeacherName'].'</td>';
    echo '<td>'.$resultArray['StartDate'].'</td>';
-   echo '<td>'.$resultArray['SDescription'].'</td>';
-   echo '<td><a class="approvebtns" id="MoveToPending" href="MoveToPending.php?id='.$resultArray['Leave_ID'].'"> Move To Pending </a>
-   <a class="approvebtns" id="reject" href="Reject.php?id='.$resultArray['Leave_ID'].'"> Reject </a></td>';
+   echo '<td><button class="btn btn-primary"><a style="text-decoration: none;color: white;" href="viewLeave.php?id='.$resultArray['Leave_ID'].'">View</a></button></td>';
    echo '</tr>';
    
  }

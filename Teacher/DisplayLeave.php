@@ -34,9 +34,10 @@ $result = mysqli_query($conn,$sqls);
 while($resultArray = mysqli_fetch_array($result))
 
 {
+  $noofleave = $resultArray['days'] + 1;
  echo '<tr>';
  echo '<td>'.$resultArray['StartDate'].'</td>';
- echo '<td>'.$resultArray['days'].'</td>';
+ echo '<td>'.$noofleave.'</td>';
  echo '<td>'.$resultArray['SDescription'].'</td>';
  echo '</tr>';
  
@@ -59,8 +60,8 @@ while($resultArray = mysqli_fetch_array($result))
            <tr>
            <th>Date for leave</th>
              <th>No.of days</th>
-             <th>Description</th>
-             <th></th>
+             <th>Rejected Reason</th>
+             <th>Rejected By</th>
            </tr>
          </thead>
          <tbody>
@@ -71,17 +72,27 @@ while($resultArray = mysqli_fetch_array($result))
 
 
 $red = $_SESSION['studentID'];
-$sqls = "SELECT SDescription,StartDate,DATEDIFF(Till_Date,StartDate) AS days FROM leavedetails WHERE Teacher_ID = $red AND SStatus = '2'";
+$sqls = "SELECT RejectedBy,Rejected_Reason,StartDate,DATEDIFF(Till_Date,StartDate) AS days FROM leavedetails WHERE Teacher_ID = $red AND SStatus = '2'";
 
 $result = mysqli_query($conn,$sqls);
 
 while($resultArray = mysqli_fetch_array($result))
 
 {
+  $noofleave = $resultArray['days'] + 1;
  echo '<tr>';
  echo '<td>'.$resultArray['StartDate'].'</td>';
- echo '<td>'.$resultArray['days'].'</td>';
- echo '<td>'.$resultArray['SDescription'].'</td>';
+ echo '<td>'.$noofleave.'</td>';
+ echo '<td>'.$resultArray['Rejected_Reason'].'</td>';
+
+ $rejectdBy = $resultArray['RejectedBy']; 
+ $teacherSQL = "SELECT * FROM teacher WHERE Teacher_ID = $rejectdBy";
+ $resultTeacher = mysqli_query($conn,$teacherSQL);
+ while($resultArrayTeacher = mysqli_fetch_array($resultTeacher))
+ {
+  echo '<td>'.$resultArrayTeacher['TeacherName'].'</td>';
+ }
+ 
  echo '</tr>';
  
 }
@@ -118,9 +129,10 @@ $result = mysqli_query($conn,$sqls);
 while($resultArray = mysqli_fetch_array($result))
 
 {
+  $noofleave = $resultArray['days'] + 1;
  echo '<tr>';
  echo '<td>'.$resultArray['StartDate'].'</td>';
- echo '<td>'.$resultArray['days'].'</td>';
+ echo '<td>'.$noofleave.'</td>';
  echo '<td>'.$resultArray['SDescription'].'</td>';
  echo '</tr>';
  

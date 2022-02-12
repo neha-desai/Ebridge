@@ -2,32 +2,26 @@
     session_start();
     if($_SESSION['studentID']==null)
     {
-        header("Location:TeacherLogin.php");
+        header("Location:AdminLogin.php");
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <?php include 'Plugins.php' ?>
+  <?php include 'Plugins.php' ?>
   </head>
-  <body style="background-color: #f6f8fa">
-    <!--Side Navbar-->
+  <body>
+   <!-- NAVBAR-->
 
-    <?php include 'SideNavbar.php' ;?>
+    <!------------ TOP NAVIGATION STARTS HERE------>
+    <?php include 'AdminHeader.php' ?>
 
-    <!--RIGHT SIDE MAIN DIV-->
-    <div id="main" class="openmain">
-    
-     <!--TOP NAV -->
-     <?php include 'TopNav.php';?>
 
-      <!--MAIN DIVS-->
-
-      <div class="row">
-        <div class="col-md-12">          
-          <div class="maindivs">
-          <?php
+    <!-----------MAIN DIVISION STARTS HERE----------->
+    <div class="container">
+      <h4>Leave Details</h4>
+      <br />
+      <?php
 
             $con=mysqli_connect("localhost", "root", "","ebdrige");
             if(mysqli_connect_errno()){
@@ -37,7 +31,7 @@
             $sid = $_GET['id'];
             $sql = "SELECT Leave_ID,SStatus, Teacher_ID, SDescription, StartDate, Till_Date, Applied_Date,Rejected_Reason, Applied_Time, LeaveType, DATEDIFF(Till_Date, StartDate)AS days FROM leavedetails WHERE Leave_ID = $sid";
 
-            $result = mysqli_query($conn,$sql);
+            $result = mysqli_query($con,$sql);
 
             while($resultArray = mysqli_fetch_array($result))
             {
@@ -46,11 +40,10 @@
                 $teacher_id = $resultArray['Teacher_ID'];
 
                 $teacher = "SELECT * FROM teacher WHERE Teacher_ID = $teacher_id";
-                $res = mysqli_query($conn,$teacher);
+                $res = mysqli_query($con,$teacher);
                 while($resarr = mysqli_fetch_array($res))
                 {
-                    echo $resarr['TeacherName'];
-                    echo '<br>';
+                    echo '<h3>'.$resarr['TeacherName'].'</h3>';
                 }
                 
 
@@ -95,38 +88,33 @@
             }
         
 ?>
+      
 
-          </div>
-        </div>
-     </div>
- 
+      
+      <hr size="2" />
+
+   
+      
+    </div>
+    <!-----------MAIN DIVISION ENDS HERE----------->
 
     <script>
 
-      function test()
+function test()
       {
         var val = document.getElementById("rejectedReason").value;
         var hrf="Reject.php?id=<?php echo $leaveid ?>&reason="+val;
         document.getElementById("reject").href=hrf;
-      };
-    
-      function closeNav() {
-        var sidebar = document.getElementById("sideNavbar");
-        var mainDiv = document.getElementById("main");
-
-        if (sidebar.className === "sideNavbar") {
-          sidebar.classList.add("closebar");
-          mainDiv.classList.add("closemain");
-        } else {
-          sidebar.classList.remove("closebar");
-          mainDiv.classList.remove("closemain");
-        }
       }
 
-      $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-      });
+      function myFunction() {
+        var x = document.getElementById("header");
+        if (x.className === "header") {
+          x.className += " responsive";
+        } else {
+          x.className = "header";
+        }
+      }
     </script>
-
   </body>
 </html>

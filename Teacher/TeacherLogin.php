@@ -29,7 +29,11 @@ session_start();
     <title>Activity Portal</title>
   </head>
 
+
   <body>
+ <marquee width="60%" direction="up" height="100px">
+This is a sample scrolling text 
+</marquee>
   <div class="loginMainDiv">
         <div class="centerMainDiv">
             <div class="loginTitle"><b>UCOE COLLEGE </b></div>

@@ -133,7 +133,7 @@
     if(mysqli_query($conn,$sql))
     {
         //echo "<script>alert('Registration successful');</script>";
-        header("Location: Exam.php");
+        echo "<script>alert('Registration successful'); window.open('Exam.php', '_self');</script>";
     }
     
     else

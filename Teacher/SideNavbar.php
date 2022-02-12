@@ -6,7 +6,10 @@
         <span class="far fa-calendar-plus"></span> Leave</a
       >
       <a href="DisplayNotice.php"
-        ><span class="far fa-calendar-times"></span>Notice</a
+        ><span class="fas fa-chalkboard"></span> Notice</a
+      >
+      <a href="Attendance.php"
+        ><span class="far fa-calendar-alt"></span> Attendance</a
       >
       <a href="approvedact.html"
         ><span class="far fa-calendar-check"></span> Exam seating arrangment</a

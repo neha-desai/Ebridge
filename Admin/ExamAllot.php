@@ -18,14 +18,14 @@
 
     <!-----------MAIN DIVISION STARTS HERE----------->
     <div class="container">
-      <h4>Branch</h4>
+      <h4>Allotment</h4>
       <br />
     
       <form action="<?php $_SERVER['PHP_SELF'] ?>" method="POST">
       <!--BUTTON TO ADD -->
       <div class="row">
         <div class="col-md-5">
-        <select id="selectBranch" name="selectBranch">
+        <select id="selectBranch" name="selectBranch" onchange="getRoom(this.value);">
         <option>--Select exam--</option>
               <?php
               include 'dbconn.php';
@@ -151,11 +151,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
 else{
     //SELECT THE SEMESTER
-     $roomsql = "SELECT Subject_ID from exam where Exam_ID=$exam" ;
+     $roomsql = "SELECT * from exam where Exam_ID=$exam" ;
      $resultroom = mysqli_query($conn,$roomsql);
      while($resultArrayrrom = mysqli_fetch_array($resultroom))
      {
-        
+        $GLOBALS['ExamDate'] = $resultArrayrrom['Exam_Date'];
+        $GLOBALS['StartTime'] = $resultArrayrrom['Start_Time'];
+        $GLOBALS['EndTime'] = $resultArrayrrom['End_Time'];
+
          $subjid =  $resultArrayrrom['Subject_ID'];
          $semsql = "SELECT Semester from subject_table where Subject_ID = $subjid";
          $resultsem = mysqli_query($conn,$semsql);
@@ -179,6 +182,12 @@ else{
         mysqli_query($conn,$allotsql);
     }
 
+    //ROOMSTATUS
+    $ExamDate =  $GLOBALS['ExamDate'];
+    $STartTime = $GLOBALS['StartTime'];
+    $EndTime = $GLOBALS['EndTime'];
+    $statussql = "INSERT INTO roomstatus(Room_ID, EDate,Start_Time,End_Time) VALUES ('$room','$ExamDate','$STartTime','$EndTime')";
+    mysqli_query($conn,$statussql);
   }
 
    
@@ -197,16 +206,17 @@ else{
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>Branch Name</th>
-              <td></td>
-              <td></td>
+              <th>Alloted Exam</th>
+              <th>Semester</th>
+              <th>Date</th>
+              <th>Room Number</th>
             </tr>
           </thead>
           <?php
           
           include 'dbconn.php';
 
-          $sql = "SELECT * FROM department";
+          $sql = "SELECT COUNT(Student_ID) as totalStudent,Exam_ID,Room_ID FROM allotment GROUP BY Exam_ID";
 
         $result = mysqli_query($conn,$sql);
 
@@ -214,9 +224,32 @@ else{
 
         {
             echo '<tr>';
-            echo '<td>'.$resultArray['Department_Name'].'</td>';
-            echo '<td> <span onclick="turnonoverlay()" id="editbtn" class="fa fa-pencil-alt" title="Edit"></span></td>';
-            echo '<td> <a href="DeleteBranch.php?id='.$resultArray['Department_ID'].'"><span id="deletebtn" class="fas fa-trash" title="Delete"></span></a></td>';
+            $ExamID = $resultArray['Exam_ID'];
+            $examsql = "SELECT * FROM exam WHERE Exam_ID = '$ExamID'";
+            $resultexam = mysqli_query($conn,$examsql);
+            while($resultArrayExam = mysqli_fetch_array($resultexam))
+            {
+             
+              $SubjID = $resultArrayExam['Subject_ID'];
+              $subjsql = "SELECT * FROM subject_table WHERE Subject_ID=$SubjID";
+              $resultsubj = mysqli_query($conn,$subjsql);
+              while($resultArraySubj = mysqli_fetch_array($resultsubj))
+              {
+                echo '<td>'.$resultArraySubj['Subject_Name'].'</td>';
+                echo '<td>'.$resultArraySubj['Semester'].'</td>';
+              }
+               echo '<td>'.$resultArrayExam['Exam_Date'].'</td>';
+               //echo '<td>'.$resultArray['totalStudent'].'</td>';
+
+               $roomID = $resultArray['Room_ID'];
+               $roomSQL = "SELECT * FROM room WHERE Room_ID = $roomID";
+               $resultRoom = mysqli_query($conn,$roomSQL);
+               while($resultArray = mysqli_fetch_array($resultRoom))
+               {
+                echo '<td>'.$resultArray['Room_Number'].'</td>';
+               }
+               
+            }
             echo '</tr>';
   
         }
@@ -231,6 +264,19 @@ else{
     <!-----------MAIN DIVISION ENDS HERE----------->
 
     <script>
+
+function getRoom(val)
+{
+  $.ajax({
+    type: "POST",
+    url: "getRoom.php",
+    data: 'Exam_ID='+val,
+    success: function(data){
+      $("#selectRoom").html(data);
+    }
+  });
+}
+
       function myFunction() {
         var x = document.getElementById("header");
         if (x.className === "header") {

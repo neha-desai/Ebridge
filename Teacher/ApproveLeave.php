@@ -128,11 +128,11 @@ while($resultArray = mysqli_fetch_array($result))
 }
 ?>
   </div> <!--TEACHERS ON LEAVE DIV ENDS HERE-->
+  <?php include 'ApproveInclude.php'?>  
 </div>
-<!-- ------------------------------------------------------------------------------------------------------- -->
-    
-<!-- ------------------------------------------------------------------------------------------------------- -->
-<?php include 'ApproveInclude.php'?>       
+
+
+     
 </div>
        
       </div>
