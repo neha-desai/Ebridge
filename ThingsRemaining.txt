@@ -1,4 +1,0 @@
-1. Add search and sort to all tables: //HOLD 
-2. Edit Branch
-3. Reject -> why rejected, rejected by whom
-5. Check if exam is already added and exam is already alloted. 
