@@ -11,7 +11,5 @@
       <a href="Attendance.php"
         ><span class="far fa-calendar-alt"></span> Attendance</a
       >
-      <a href="approvedact.html"
-        ><span class="far fa-calendar-check"></span> Exam seating arrangment</a
-      >
+    
     </div>

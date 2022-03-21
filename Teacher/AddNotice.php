@@ -40,7 +40,7 @@
             <div class="row">        
               <div class="col-md-6"> 
               <label for="NDescription"><b>Notice Description</b></label><br>
-                <input class="form-control" type="text" name="NDescription" id="NDescription" style="padding: 5px 5px 5px 5px; border-radius: 3px; border: 1px solid lightgrey;height: 200px;" placeholder="Start typing your notice...">              
+                <input class="form-control" type="text" name="NDescription" id="NDescription" style="padding: 5px 5px 5px 5px; border-radius: 3px; border: 1px solid lightgrey;height: 200px;width:100%;" placeholder="Start typing your notice...">              
               </div>        
             </div>    
             <br><br>
@@ -71,7 +71,7 @@ $NTitle =$_POST['NTitle'];
 $NDescription = $_POST['NDescription'];
 $TID=$_SESSION['studentID'];
 $DID = $_SESSION['deptID'];
-                $sql="INSERT INTO notice(NoticeTitle, NoticeDescription,Teacher_ID,Dept_ID, NoticeImage) VALUES ('$NTitle','$NDescription','$TID','$DID','.$fileName.')";
+                $sql="INSERT INTO notice(NoticeTitle, NoticeDescription,Teacher_ID,Dept_ID, NoticeImage) VALUES ('$NTitle','$NDescription','$TID','$DID','$fileName')";
            
           if(mysqli_query($conn,$sql))
           {

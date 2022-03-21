@@ -48,11 +48,17 @@ while($resultArray = mysqli_fetch_array($result))
     echo '<div class="row">';
     echo '<div class="col-md-12">';
     echo '<div class="maindivs">';
-        echo '<b>'.$resultArray['NoticeTitle'].'</b>';
-        echo '<p class="NoticeDescription"style="color: #4e5053; ">'.$resultArray['NoticeDescription'].'</p>';
-        echo '<a href="ViewNotice.php"><button  class="btn btn-outline-info">View</button></a>';
-        echo '<button style="margin-left: 10px;float:right;" class="btn btn-outline-secondary">Edit</button>';
-        echo '<button style="margin-left: 10px;float:right;" class="btn btn-outline-danger">Delete</button>';
+       
+        $teacher = $resultArray['Teacher_ID'];
+        $sqlTeacher = "SELECT * FROM teacher WHERE Teacher_ID = '$teacher'";
+        $resultTeacher = mysqli_query($conn,$sqlTeacher);
+        while($resultArrayTeacher = mysqli_fetch_array($resultTeacher))
+        {
+            echo '<b>'.$resultArray['NoticeTitle'].'</b> <span class="badge badge-info">'.$resultArray['Date_Uploaded'].'</span><span class="badge badge-secondary ml-2">'.$resultArrayTeacher['TeacherName'].'</span><br>';
+        }
+        echo '<p class="NoticeDescription" style="color: #4e5053; ">'.$resultArray['NoticeDescription'].'</p>';
+        echo '<a href="ViewNotice.php?id='.$resultArray['Notice_ID'].'"><button  class="btn btn-outline-info">View</button></a>';      
+        echo '<a href="DeleteNotice.php?id='.$resultArray['Notice_ID'].'"><button style="float:right;" class="btn btn-outline-danger">Delete</button></a>';
     echo '</div>';
     echo '</div>';
     echo '</div>';

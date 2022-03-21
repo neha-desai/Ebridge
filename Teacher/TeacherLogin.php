@@ -31,9 +31,7 @@ session_start();
 
 
   <body>
- <marquee width="60%" direction="up" height="100px">
-This is a sample scrolling text 
-</marquee>
+
   <div class="loginMainDiv">
         <div class="centerMainDiv">
             <div class="loginTitle"><b>UCOE COLLEGE </b></div>
@@ -44,7 +42,7 @@ This is a sample scrolling text
               <input type="text" placeholder="Email ID" name="email" id="Email">
               <input type="password" placeholder="Enter Password" name="password" id="password"><br><br>
 
-              <input type="submit" value="Login">
+              <input type="submit" value="Login" class="btn btn-primary">
               </form>
         </div>
         </div>

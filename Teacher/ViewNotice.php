@@ -5,65 +5,52 @@
         header("Location:TeacherLogin.php");
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <?php include 'Plugins.php' ?>
+    <?php include 'Plugins.php' ?>
   </head>
   <body style="background-color: #f6f8fa">
-    
     <!--Side Navbar-->
+
     <?php include 'SideNavbar.php' ;?>
 
     <!--RIGHT SIDE MAIN DIV-->
     <div id="main" class="openmain">
-     
-    <!--TOP NAV -->
-    <?php include 'TopNav.php';?>
-
+    
+     <!--TOP NAV -->
+     <?php include 'TopNav.php';?>
 
       <!--MAIN DIVS-->
 
-      <div class="row">
-        <div class="col-md-6">
-          <div class="maindivs">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="maindivs">
+                <?php 
+                include 'dbconn.php';
+               
+                $nid = $_GET['id'];
                 
-          </div>
-        </div>
-
-
-        <div class="col-md-3">
-          <div class="maindivs">
+                $sql = "SELECT * FROM notice WHERE Notice_ID = '$nid'";
                 
-          </div>
+                $result = mysqli_query($conn,$sql);
+                
+                while($resultArray = mysqli_fetch_array($result))
+                {
+                  echo '<h4>'.$resultArray['NoticeTitle'].'</h4> <br>';
+                  echo $resultArray['NoticeDescription'];
+                  echo '<br> <br><a href="uploads/'.$resultArray['NoticeImage'].'" target="_blank"> View File </a>';
+                } ?>
+            
+            </div>
         </div>
+    </div>
+ 
 
 
 
-        <div class="col-md-3">
-          <div class="maindivs">
-          No. of Leaves you are left with: 
-          <?php 
-          include 'dbconn.php';
-          $tid = $_SESSION['studentID'];
-          $sql = "SELECT NoofLeaves from teacher where Teacher_ID =  '$tid'";
 
-          $result = mysqli_query($conn,$sql);
-
-          while($resultArray = mysqli_fetch_array($result))
-          {
-            echo ' <h1 style="text-align: center;font-size: 54px;font-weight: 700">'.$resultArray['NoofLeaves'].'</h1> ';
-          }
-          ?>
-             
-              
-          </div>
-        </div>
-
-       
-
-      
-      </div>
     </div>
 
     <script>
