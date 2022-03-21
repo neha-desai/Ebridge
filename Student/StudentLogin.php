@@ -40,7 +40,7 @@ session_start();
               <input type="text" placeholder="Username" name="email" id="Email">
               <input type="password" placeholder="Enter Password" name="password" id="password"><br><br>
 
-              <input type="submit" value="Login">
+              <input type="submit" value="Login" class="btn btn-primary">
               </form>
         </div>
         </div>

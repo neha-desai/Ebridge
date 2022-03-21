@@ -170,6 +170,7 @@ function fetch_studentData()
 
 while($resultArray = mysqli_fetch_array($result))
 {
+  $GLOBALS['candidatePhoto'] = $resultArray['CandidatePhoto'];
   $output .= '<tr style="text-align:center;"><td> Sem '.$resultArray['Semester'].'</td>
                   <td>Choice Based</td>
                   <td>982</td>
@@ -241,14 +242,20 @@ $content .= '</table>';
   <th style="width: 21.5%"><b>End Time</b></th>
   </thead>
 </tr>';
-$content .= fetch_data();  
+$content .= fetch_data(); 
+$content .= '<tr>
+<td colspan="3" style="font-size:8px;"><b>  Note:</b><br>
+1. This hallticket is valid ONLY if signed by the principal of the institue.<br>
+2. The hallticket of not eligible (detained or other case) candidates shall be withheld. <br>
+3. The subjects and heads applied for examination are display. <br>
+4. No candidates shall be allowed without hallticket.</td>
+
+<td>
+<img src="img/'.$GLOBALS['candidatePhoto'].'">
+</td>
+</tr>'; 
 $content .= '</table>';  
-$content .= '<br><p style="font-size:8px;">
-<b>  Note:</b><br>
-  1. This hallticket is valid ONLY if signed by the principal of the institue.<br>
-  2. The hallticket of not eligible (detained or other case) candidates shall be withheld. <br>
-  3. The subjects and heads applied for examination are display. <br>
-  4. No candidates shall be allowed without hallticket.</p>';
+
 $obj_pdf->writeHTML($content);  
 ob_end_clean();
 $obj_pdf->Output('sample.pdf', 'I');  
