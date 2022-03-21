@@ -210,6 +210,7 @@ else{
               <th>Semester</th>
               <th>Date</th>
               <th>Room Number</th>
+              <th></th>
             </tr>
           </thead>
           <?php
@@ -250,12 +251,15 @@ else{
                }
                
             }
+            
             echo '</tr>';
   
         }
           ?>
           
         </table>
+        <a href="DownloadAllotment.php"><button id="addBranch" name="addBranch" class="btn btn-default">Print</button></a>
+
       </div>
 
       <!--OVERLAY-->
