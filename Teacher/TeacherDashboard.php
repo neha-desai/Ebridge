@@ -27,7 +27,20 @@
       <div class="row">
         <div class="col-md-6">
           <div class="maindivs">
-                
+            <h4>Subjects for this semester</h4>
+          <?php 
+          include 'dbconn.php';
+          $tid = $_SESSION['studentID'];
+          $sql = "SELECT * from subject_table where Teacher_ID =  '$tid'";
+
+          $result = mysqli_query($conn,$sql);
+
+          while($resultArray = mysqli_fetch_array($result))
+          {
+            if($resultArray['Subject_Type'] == 1){echo ' <li>'.$resultArray['Subject_Name'].' - Theory</li>';}
+            else{echo ' <li>'.$resultArray['Subject_Name'].' - Practical</li>';}
+          }
+          ?>
           </div>
         </div>
 
@@ -44,8 +57,7 @@
           <div class="maindivs">
           No. of Leaves you are left with: 
           <?php 
-          include 'dbconn.php';
-          $tid = $_SESSION['studentID'];
+        
           $sql = "SELECT NoofLeaves from teacher where Teacher_ID =  '$tid'";
 
           $result = mysqli_query($conn,$sql);

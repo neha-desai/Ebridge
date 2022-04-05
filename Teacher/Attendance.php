@@ -29,6 +29,7 @@
           <div class="maindivs">
               <!--ADD A LECTURE BTN-->
           <a href="AddAttendance.php"> <button class="btn btn-primary">Add a new Lecture Attendance <span class="fas fa-plus"></span></button></a>
+          <a href="getDefaulter.php"> <button class="btn btn-info">Get defaulter list</button></a>
         <br><br>
 
 <!--LECTURES BRIEF-->
@@ -38,7 +39,8 @@
             <thead>
               <tr>
                 <th>Subject Name</th>
-                <th>No.of Lectures</th>           
+                <th>No.of Lectures</th>   
+                <th></th>        
               </tr>
               </thead>
 
@@ -69,6 +71,7 @@
               while($resultDept = mysqli_fetch_array($Subjresults))
               {
                 echo '<td>'.$resultDept['CountLec'].'</td>';
+  
               }
                            
                 echo '</tr>';

@@ -99,17 +99,25 @@ $TeacherID = $_SESSION['studentID'];
 $SubjectID = $_POST['selectSubject'];
 $absentList = $_POST['absentList'];
 
-$sql="INSERT INTO lectures(Lec_Date, Start_Time,End_Time,Subject_ID, Teacher_ID,attendance) VALUES ('$LecData','$LecStartTime','$LecEndTime','$SubjectID','$TeacherID','$absentList')";
+$diff = strtotime($LecEndTime) - strtotime($LecStartTime);
+$mins = (strtotime($LecEndTime) - strtotime($LecStartTime)) / 60;
+if($mins>60)
+{echo "<script>alert('Lecture should be only of 1 hour.')</script>";}
+
+else{
+
+            $sql="INSERT INTO lectures(Lec_Date, Start_Time,End_Time,Subject_ID, Teacher_ID,attendance) VALUES ('$LecData','$LecStartTime','$LecEndTime','$SubjectID','$TeacherID','$absentList')";
            
-          if(mysqli_query($conn,$sql))
-          {
+           if(mysqli_query($conn,$sql))
+           {
             echo "<script>alert('Lecture added Successfully'); window.open('Attendance.php', '_self');</script>";
-          }
-          else
+           }
+           else
           {
               echo "Error :".mysqli_error($conn);
           }
         }
+      }
  
 ?>
 
