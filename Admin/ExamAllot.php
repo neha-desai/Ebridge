@@ -245,10 +245,13 @@ else{
                $roomID = $resultArray['Room_ID'];
                $roomSQL = "SELECT * FROM room WHERE Room_ID = $roomID";
                $resultRoom = mysqli_query($conn,$roomSQL);
-               while($resultArray = mysqli_fetch_array($resultRoom))
+               while($resultArrayRoom = mysqli_fetch_array($resultRoom))
                {
-                echo '<td>'.$resultArray['Room_Number'].'</td>';
+                echo '<td>'.$resultArrayRoom['Room_Number'].'</td>';
+                echo '<td><a href="DownloadAllotment.php?roomId='.$resultArrayRoom['Room_ID'].'&Exam_ID='.$resultArrayExam['Exam_ID'].'">Print</a>
+                </td>';
                }
+
                
             }
             
@@ -258,8 +261,7 @@ else{
           ?>
           
         </table>
-        <a href="DownloadAllotment.php"><button id="addBranch" name="addBranch" class="btn btn-default">Print</button></a>
-
+        
       </div>
 
       <!--OVERLAY-->
